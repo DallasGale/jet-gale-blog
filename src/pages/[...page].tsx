@@ -6,41 +6,7 @@ import Head from "next/head";
 import { Builder } from "@builder.io/react";
 import dynamic from "next/dynamic";
 
-// Replace with your Public API Key
-builder.init("dda4601428c445b28577f8c04e58dafd");
-
-Builder.registerComponent(
-  dynamic(() => import("../components/hero/hero")),
-  {
-    name: "Hero",
-    inputs: [{ name: "title", type: "text" }],
-    image:
-      "https://tabler-icons.io/static/tabler-icons/icons-png/3d-cube-sphere-off.png",
-  }
-);
-
-Builder.registerComponent(
-  dynamic(() => import("../components/card/card")),
-  {
-    name: "Card",
-    image: "https://tabler-icons.io/static/tabler-icons/icons-png/id-badge.png",
-    inputs: [
-      {
-        name: "title",
-        type: "string",
-        required: true,
-        defaultValue: "I am a React + Tailwind component!",
-      },
-      {
-        name: "description",
-        type: "text",
-        defaultValue:
-          "You can find my source code at: https://github.com/BuilderIO/blog-example/blob/main/components/Card.js",
-        required: true,
-      },
-    ],
-  }
-);
+builder.init(`${process.env.NEXT_PUBLIC_BUILDER_API_KEY}`);
 
 // Define a function that fetches the Builder
 // content for a given page
@@ -80,6 +46,50 @@ export async function getStaticPaths() {
     fallback: true,
   };
 }
+
+Builder.registerComponent(
+  dynamic(() => import("../components/gallery/image/image")),
+  {
+    name: "Gallery Image",
+    inputs: [
+      { name: "src", required: true, type: "file" },
+      { name: "description", required: true, type: "text" },
+    ],
+    image: "https://tabler-icons.io/static/tabler-icons/icons-png/camera.png",
+  }
+);
+Builder.registerComponent(
+  dynamic(() => import("../components/hero/hero")),
+  {
+    name: "Hero",
+    inputs: [{ name: "title", type: "text" }],
+    image:
+      "https://tabler-icons.io/static/tabler-icons/icons-png/3d-cube-sphere-off.png",
+  }
+);
+
+Builder.registerComponent(
+  dynamic(() => import("../components/card/card")),
+  {
+    name: "Card",
+    image: "https://tabler-icons.io/static/tabler-icons/icons-png/id-badge.png",
+    inputs: [
+      {
+        name: "title",
+        type: "string",
+        required: true,
+        defaultValue: "I am a React + Tailwind component!",
+      },
+      {
+        name: "description",
+        type: "text",
+        defaultValue:
+          "You can find my source code at: https://github.com/BuilderIO/blog-example/blob/main/components/Card.js",
+        required: true,
+      },
+    ],
+  }
+);
 
 // Define the Page component
 const Page = ({ page }) => {
